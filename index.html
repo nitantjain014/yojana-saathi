@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0F6B4F">
+<title>Yojana Saathi | योजना साथी</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--g:#0F6B4F;--gd:#0A4D39;--m:#F2A900;--bg:#F3F6F4;--ink:#16211B;--mut:#52625A;--line:#D8E0DB}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Devanagari","Noto Sans",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:18px;line-height:1.5}
+#app{max-width:520px;margin:0 auto;min-height:100vh;padding:0 18px calc(120px + env(safe-area-inset-bottom))}
+.top{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top)) 0 10px;gap:10px}
+.brand{font-weight:800;color:var(--g);font-size:20px}
+.back{border:0;background:none;color:var(--g);font:inherit;font-weight:700;padding:8px 4px}
+.lang{display:flex;border:2px solid var(--g);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:#fff;color:var(--g);font:inherit;font-size:15px;font-weight:700;padding:6px 12px}
+.lang button.on{background:var(--g);color:#fff}
+.prog{display:flex;gap:6px;margin:6px 0 4px}
+.prog i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.prog i.on{background:var(--m)}
+.stp{color:var(--mut);font-size:15px;margin:0 0 18px}
+h1{font-size:28px;line-height:1.25;margin:10px 0 8px}
+.hint{color:var(--mut);font-size:16px;margin:0 0 18px}
+.in{width:100%;font:inherit;font-size:34px;font-weight:700;padding:14px 16px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
+.in:focus{outline:3px solid var(--m);border-color:var(--g)}
+.big{background:#fff;border:2px solid var(--g);border-radius:14px;padding:14px 16px;margin-top:14px;font-size:24px;font-weight:800;color:var(--gd)}
+.big small{display:block;font-size:15px;font-weight:600;color:var(--mut)}
+.opt{display:block;width:100%;text-align:left;font:inherit;font-size:22px;font-weight:700;padding:18px;margin:0 0 12px;background:#fff;color:var(--ink);border:2px solid var(--line);border-radius:14px}
+.opt.on{border-color:var(--g);background:#E3F2EC;color:var(--gd)}
+.row{display:flex;gap:12px}
+.row .opt{text-align:center}
+.q{font-size:21px;font-weight:700;margin:24px 0 10px}
+.btn{display:block;width:100%;font:inherit;font-size:20px;font-weight:800;padding:16px;border:0;border-radius:14px;background:var(--g);color:#fff;margin-top:22px;text-align:center;text-decoration:none}
+.btn:disabled{background:#B9C6BF}
+.btn.alt{background:#fff;color:var(--g);border:2px solid var(--g)}
+.card{display:flex;gap:14px;align-items:center;width:100%;text-align:left;font:inherit;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin:0 0 12px;color:var(--ink)}
+.card:active{background:#EEF3F0}
+.logo{flex:0 0 64px;height:64px;border-radius:14px;display:grid;place-items:center;font-size:32px;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:contain}
+.ct{flex:1;min-width:0}
+.cn{font-weight:800;font-size:17px;line-height:1.3}
+.cs{color:var(--mut);font-size:15px;line-height:1.4;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chev{color:var(--g);font-size:28px;font-weight:700}
+.sec{background:#fff;border-radius:14px;border:1px solid var(--line);padding:14px 16px;margin-bottom:12px}
+.sec h2{margin:0 0 4px;font-size:17px;color:var(--g)}
+.sec p{margin:0;font-size:18px}
+.hero{display:flex;gap:14px;align-items:center;margin:8px 0 16px}
+.hero .logo{flex-basis:76px;height:76px;font-size:40px}
+.hero h1{margin:0;font-size:24px}
+.listen{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));z-index:5;border:0;border-radius:999px;background:var(--m);color:#1d1600;font:inherit;font-size:20px;font-weight:800;padding:16px 30px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.listen.on{background:#C62828;color:#fff}
+.toast{position:fixed;left:16px;right:16px;bottom:100px;background:#16211B;color:#fff;padding:12px 16px;border-radius:12px;font-size:16px;z-index:9;text-align:center}
+.note{color:var(--mut);font-size:15px;margin:14px 0}
+.sum{color:var(--mut);font-size:16px;margin:0 0 16px}
+:focus-visible{outline:3px solid var(--m);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ---------- Text in English and Hindi ---------- */
+const U={
+ app:{en:'Yojana Saathi',hi:'योजना साथी'},
+ back:{en:'‹ Back',hi:'‹ पीछे'},
+ next:{en:'Next',hi:'आगे'},
+ step:{en:'Step {a} of 4',hi:'चरण {a} / 4'},
+ q1:{en:'How old are you?',hi:'आपकी उम्र कितनी है?'},
+ q1h:{en:'Write your age in years',hi:'अपनी उम्र साल में लिखें'},
+ q2:{en:'How much do you earn every month?',hi:'आप हर महीने कितना कमाते हैं?'},
+ q2h:{en:'Add up all your work, in rupees',hi:'सारे काम की कमाई जोड़कर, रुपये में लिखें'},
+ yr:{en:'Your income per year',hi:'आपकी सालाना कमाई'},
+ q3:{en:'You are',hi:'आप हैं'},
+ m:{en:'Male',hi:'पुरुष'},
+ f:{en:'Female',hi:'महिला'},
+ o:{en:'Other',hi:'अन्य'},
+ q4a:{en:'Do you have a bank account?',hi:'क्या आपका बैंक खाता है?'},
+ q4b:{en:'Is PF or ESI cut from your salary?',hi:'क्या आपकी सैलरी से PF या ESI कटता है?'},
+ q4bh:{en:'PF and ESI are cut by a company or employer. Most maids and daily workers say No.',hi:'PF और ESI कंपनी या मालिक काटता है। ज़्यादातर घरेलू कामगार और दिहाड़ी मज़दूर "नहीं" कहते हैं।'},
+ yes:{en:'Yes',hi:'हाँ'},
+ no:{en:'No',hi:'नहीं'},
+ see:{en:'See my schemes',hi:'मेरी योजनाएँ देखें'},
+ res:{en:'{n} schemes for you',hi:'आपके लिए {n} योजनाएँ'},
+ prof:{en:'Age {age}, income ₹{inc} a year',hi:'उम्र {age} साल, सालाना कमाई ₹{inc}'},
+ none:{en:'No scheme matched your answers. Please visit myscheme.gov.in or your nearest CSC.',hi:'आपके जवाबों से कोई योजना नहीं मिली। कृपया myscheme.gov.in या अपने पास के CSC पर जाँचें।'},
+ again:{en:'Start again',hi:'फिर से शुरू करें'},
+ what:{en:'What is it?',hi:'यह क्या है?'},
+ who:{en:'Who can get it?',hi:'कौन ले सकता है?'},
+ get:{en:'What will you get?',hi:'आपको क्या मिलेगा?'},
+ how:{en:'How to apply',hi:'आवेदन कैसे करें'},
+ site:{en:'Open official website',hi:'सरकारी वेबसाइट खोलें'},
+ note:{en:'Final eligibility is checked when you apply. Please confirm at the official website or a CSC.',hi:'आवेदन के समय पात्रता की अंतिम जाँच होती है। सरकारी वेबसाइट या CSC पर पक्का कर लें।'},
+ listen:{en:'🔊 Listen',hi:'🔊 सुनें'},
+ stop:{en:'⏹ Stop',hi:'⏹ रोकें'},
+ novoice:{en:'Voice not found on this phone. Install "Speech Services by Google" and try again.',hi:'इस फ़ोन में आवाज़ नहीं मिली। "Speech Services by Google" इंस्टॉल करके फिर कोशिश करें।'}
+};
+
+/* ---------- Scheme data ----------
+   ok(p) decides if a scheme is shown.
+   p = {age, mo (monthly), yr (yearly), f (female), bank, pf}
+   To use a real logo, add  logo:'logos/eshram.png'  to a scheme.   */
+const LOW=300000; /* yearly income limit used for low-income schemes */
+const SCH=[
+{id:'jandhan',icon:'💳',color:'#283593',link:'https://pmjdy.gov.in',
+ name:{en:'PM Jan Dhan Account',hi:'प्रधानमंत्री जन धन खाता'},
+ short:{en:'Free zero-balance bank account with a RuPay card.',hi:'मुफ़्त ज़ीरो बैलेंस बैंक खाता और RuPay कार्ड।'},
+ what:{en:'A bank account you can open with no money. Most schemes need a bank account, so open this first.',hi:'ऐसा बैंक खाता जो बिना पैसे के खुल जाता है। ज़्यादातर योजनाओं में बैंक खाता ज़रूरी है, इसलिए पहले यह खुलवाएँ।'},
+ who:{en:'Any Indian aged 10 or above who does not have a bank account.',hi:'10 साल या उससे ज़्यादा उम्र का कोई भी भारतीय, जिसका बैंक खाता नहीं है।'},
+ get:{en:'A zero-balance account, a RuPay debit card with accident insurance, and scheme money can come straight into your account.',hi:'ज़ीरो बैलेंस खाता, दुर्घटना बीमा वाला RuPay डेबिट कार्ड, और सरकारी योजनाओं का पैसा सीधे आपके खाते में आ सकता है।'},
+ how:{en:'Go to any bank branch or Bank Mitra with your Aadhaar card and ask for a Jan Dhan account.',hi:'अपना आधार कार्ड लेकर किसी भी बैंक शाखा या बैंक मित्र के पास जाएँ और जन धन खाता माँगें।'},
+ ok:p=>!p.bank&&p.age>=10},
+{id:'eshram',icon:'🪪',color:'#1565C0',link:'https://eshram.gov.in',
+ name:{en:'e-Shram Card',hi:'ई-श्रम कार्ड'},
+ short:{en:'Free ID card for workers, with ₹2 lakh accident insurance.',hi:'मज़दूरों का मुफ़्त कार्ड, साथ में ₹2 लाख का दुर्घटना बीमा।'},
+ what:{en:'A free card from the Government of India for workers who have no fixed company job, like maids, drivers, labourers and vendors. It gives you a 12-digit number.',hi:'भारत सरकार का मुफ़्त कार्ड, उन लोगों के लिए जिनकी पक्की कंपनी की नौकरी नहीं है, जैसे घरेलू कामगार, ड्राइवर, मज़दूर और ठेले वाले। इसमें आपको 12 अंकों का नंबर मिलता है।'},
+ who:{en:'Age 16 to 59. PF or ESI should not be cut from your salary, and you should not pay income tax.',hi:'उम्र 16 से 59 साल। आपकी सैलरी से PF या ESI नहीं कटता हो और आप इनकम टैक्स न भरते हों।'},
+ get:{en:'Free accident insurance of ₹2 lakh for the first year, and one place to get many government schemes.',hi:'पहले साल ₹2 लाख का मुफ़्त दुर्घटना बीमा, और कई सरकारी योजनाओं का एक ही जगह से लाभ।'},
+ how:{en:'Go to eshram.gov.in or your nearest CSC. Carry your Aadhaar, a mobile number linked to Aadhaar, and your bank account details.',hi:'eshram.gov.in पर जाएँ या अपने पास के CSC पर जाएँ। आधार, आधार से जुड़ा मोबाइल नंबर और बैंक खाते की जानकारी साथ ले जाएँ।'},
+ ok:p=>p.age>=16&&p.age<=59&&!p.pf},
+{id:'pmsym',icon:'👴',color:'#6A1B9A',link:'https://maandhan.in',
+ name:{en:'PM Shram Yogi Maandhan',hi:'प्रधानमंत्री श्रम योगी मान-धन'},
+ short:{en:'Monthly pension of ₹3,000 after you turn 60.',hi:'60 साल के बाद हर महीने ₹3,000 पेंशन।'},
+ what:{en:'A pension scheme for workers. You put in a small amount every month, and the government puts in the same amount.',hi:'मज़दूरों के लिए पेंशन योजना। आप हर महीने थोड़ी रकम जमा करते हैं और सरकार भी उतनी ही रकम जमा करती है।'},
+ who:{en:'Age 18 to 40, monthly income up to ₹15,000, no PF, ESI or NPS, and not paying income tax. You need a bank account.',hi:'उम्र 18 से 40 साल, महीने की कमाई ₹15,000 तक, PF, ESI या NPS नहीं हो, और इनकम टैक्स न भरते हों। बैंक खाता ज़रूरी है।'},
+ get:{en:'₹3,000 pension every month after you turn 60. You pay about ₹55 to ₹200 a month, depending on your age when you join.',hi:'60 साल के बाद हर महीने ₹3,000 पेंशन। जुड़ने की उम्र के हिसाब से आपको हर महीने लगभग ₹55 से ₹200 देने होंगे।'},
+ how:{en:'Visit your nearest CSC with your Aadhaar, bank passbook and mobile number. You can also see maandhan.in.',hi:'आधार, बैंक पासबुक और मोबाइल नंबर लेकर अपने पास के CSC पर जाएँ। आप maandhan.in भी देख सकते हैं।'},
+ ok:p=>p.age>=18&&p.age<=40&&p.mo<=15000&&!p.pf&&p.bank},
+{id:'apy',icon:'🏦',color:'#00796B',link:'https://www.myscheme.gov.in/schemes/apy',
+ name:{en:'Atal Pension Yojana',hi:'अटल पेंशन योजना'},
+ short:{en:'Fixed pension of ₹1,000 to ₹5,000 a month after age 60.',hi:'60 साल के बाद हर महीने ₹1,000 से ₹5,000 तक पक्की पेंशन।'},
+ what:{en:'A pension scheme run through your bank. You save a small amount every month and get a fixed pension when you are old.',hi:'बैंक के ज़रिए चलने वाली पेंशन योजना। आप हर महीने थोड़ी बचत करते हैं और बुढ़ापे में पक्की पेंशन पाते हैं।'},
+ who:{en:'Age 18 to 40 with a bank account. People who pay income tax cannot join.',hi:'उम्र 18 से 40 साल और बैंक खाता। जो लोग इनकम टैक्स भरते हैं वे नहीं जुड़ सकते।'},
+ get:{en:'A fixed pension of ₹1,000, 2,000, 3,000, 4,000 or 5,000 a month after age 60. You choose. The higher the pension, the more you pay each month. If you pass away, your spouse gets the pension.',hi:'60 साल के बाद हर महीने ₹1,000, 2,000, 3,000, 4,000 या 5,000 की पक्की पेंशन। चुनाव आपका। जितनी ज़्यादा पेंशन, उतना ज़्यादा मासिक भुगतान। आपके बाद पति या पत्नी को पेंशन मिलती है।'},
+ how:{en:'Go to your bank branch with your Aadhaar and mobile number. The monthly amount is taken automatically from your account.',hi:'आधार और मोबाइल नंबर लेकर अपनी बैंक शाखा जाएँ। हर महीने की रकम आपके खाते से अपने आप कट जाती है।'},
+ ok:p=>p.age>=18&&p.age<=40&&p.bank},
+{id:'pmjjby',icon:'🛡️',color:'#C62828',link:'https://jansuraksha.gov.in',
+ name:{en:'PM Jeevan Jyoti Bima Yojana',hi:'प्रधानमंत्री जीवन ज्योति बीमा योजना'},
+ short:{en:'₹2 lakh life insurance for about ₹436 a year.',hi:'सालाना लगभग ₹436 में ₹2 लाख का जीवन बीमा।'},
+ what:{en:'Life insurance for one year at a time. You renew it every year.',hi:'एक साल का जीवन बीमा। इसे हर साल आगे बढ़ाना होता है।'},
+ who:{en:'Age 18 to 50 with a bank account.',hi:'उम्र 18 से 50 साल और बैंक खाता।'},
+ get:{en:'₹2 lakh is paid to your family if you pass away for any reason. The premium is about ₹436 a year and is taken from your bank account. The amount can change, so check with your bank.',hi:'किसी भी कारण से आपकी मृत्यु होने पर परिवार को ₹2 लाख मिलते हैं। प्रीमियम लगभग ₹436 सालाना है और आपके बैंक खाते से कटता है। रकम बदल सकती है, इसलिए बैंक से पूछ लें।'},
+ how:{en:'Ask at your bank branch, or see jansuraksha.gov.in.',hi:'अपनी बैंक शाखा में पूछें, या jansuraksha.gov.in देखें।'},
+ ok:p=>p.age>=18&&p.age<=50&&p.bank},
+{id:'pmsby',icon:'🩹',color:'#EF6C00',link:'https://jansuraksha.gov.in',
+ name:{en:'PM Suraksha Bima Yojana',hi:'प्रधानमंत्री सुरक्षा बीमा योजना'},
+ short:{en:'₹2 lakh accident insurance for about ₹20 a year.',hi:'सालाना लगभग ₹20 में ₹2 लाख का दुर्घटना बीमा।'},
+ what:{en:'Accident insurance for one year at a time. You renew it every year.',hi:'एक साल का दुर्घटना बीमा। इसे हर साल आगे बढ़ाना होता है।'},
+ who:{en:'Age 18 to 70 with a bank account.',hi:'उम्र 18 से 70 साल और बैंक खाता।'},
+ get:{en:'₹2 lakh for death or full disability from an accident, and ₹1 lakh for partial disability. The premium is about ₹20 a year.',hi:'दुर्घटना में मृत्यु या पूरी विकलांगता पर ₹2 लाख, और आंशिक विकलांगता पर ₹1 लाख। प्रीमियम लगभग ₹20 सालाना है।'},
+ how:{en:'Ask at your bank branch, or see jansuraksha.gov.in.',hi:'अपनी बैंक शाखा में पूछें, या jansuraksha.gov.in देखें।'},
+ ok:p=>p.age>=18&&p.age<=70&&p.bank},
+{id:'pmjay',icon:'🏥',color:'#2E7D32',link:'https://pmjay.gov.in',
+ name:{en:'Ayushman Bharat (PM-JAY)',hi:'आयुष्मान भारत (PM-JAY)'},
+ short:{en:'Free treatment up to ₹5 lakh a year for your family.',hi:'परिवार के लिए हर साल ₹5 लाख तक मुफ़्त इलाज।'},
+ what:{en:'Government health insurance. It pays for your treatment when you are admitted to a hospital.',hi:'सरकारी स्वास्थ्य बीमा। अस्पताल में भर्ती होने पर यह इलाज का खर्च देता है।'},
+ who:{en:'Poor and low-income families listed by the government. Everyone aged 70 or above can also get cover. Check if your family is on the list.',hi:'सरकार की सूची में शामिल ग़रीब और कम आय वाले परिवार। 70 साल या उससे ज़्यादा उम्र के सभी लोग भी इसमें आ सकते हैं। देखें कि आपके परिवार का नाम सूची में है या नहीं।'},
+ get:{en:'Cashless treatment up to ₹5 lakh per family per year in listed government and private hospitals.',hi:'सूची वाले सरकारी और प्राइवेट अस्पतालों में हर परिवार को हर साल ₹5 लाख तक कैशलेस इलाज।'},
+ how:{en:'Check your name on mera.pmjay.gov.in or call 14555. Then take your Aadhaar and ration card to an Ayushman Mitra at a hospital or CSC to get your card.',hi:'mera.pmjay.gov.in पर अपना नाम देखें या 14555 पर फ़ोन करें। फिर आधार और राशन कार्ड लेकर अस्पताल या CSC में आयुष्मान मित्र से कार्ड बनवाएँ।'},
+ ok:p=>p.yr<=LOW||p.age>=70},
+{id:'ration',icon:'🌾',color:'#9E6B00',link:'https://nfsa.gov.in',
+ name:{en:'Free Ration (PMGKAY and One Nation One Ration Card)',hi:'मुफ़्त राशन (PMGKAY और वन नेशन वन राशन कार्ड)'},
+ short:{en:'Free 5 kg grain per person every month, from any state.',hi:'हर व्यक्ति को हर महीने 5 किलो मुफ़्त अनाज, किसी भी राज्य से।'},
+ what:{en:'Free wheat or rice every month for families with a ration card. With One Nation One Ration Card you can take your ration in any state, which helps if you move for work.',hi:'राशन कार्ड वाले परिवारों को हर महीने मुफ़्त गेहूँ या चावल। वन नेशन वन राशन कार्ड से आप किसी भी राज्य में राशन ले सकते हैं, जो काम के लिए शहर बदलने वालों के लिए मददगार है।'},
+ who:{en:'Families with a priority household or Antyodaya ration card.',hi:'प्राथमिकता वाले परिवार या अंत्योदय राशन कार्ड वाले परिवार।'},
+ get:{en:'5 kg of free grain per person every month at your ration shop.',hi:'अपनी राशन दुकान पर हर व्यक्ति को हर महीने 5 किलो मुफ़्त अनाज।'},
+ how:{en:'Apply for a ration card at your state food department or nearest CSC. Carry the Aadhaar of all family members and an address proof. The Mera Ration app helps you check your card.',hi:'अपने राज्य के खाद्य विभाग या पास के CSC पर राशन कार्ड के लिए आवेदन करें। परिवार के सभी सदस्यों का आधार और पते का प्रमाण साथ ले जाएँ। मेरा राशन ऐप से अपना कार्ड देख सकते हैं।'},
+ ok:p=>p.yr<=LOW},
+{id:'ujjwala',icon:'🔥',color:'#D84315',link:'https://pmuy.gov.in',
+ name:{en:'PM Ujjwala Yojana',hi:'प्रधानमंत्री उज्ज्वला योजना'},
+ short:{en:'Free LPG gas connection for women from poor families.',hi:'ग़रीब परिवार की महिलाओं के लिए मुफ़्त गैस कनेक्शन।'},
+ what:{en:'A scheme that gives you a cooking gas connection, so you do not have to cook on wood or coal smoke.',hi:'ऐसी योजना जिसमें रसोई गैस कनेक्शन मिलता है, ताकि लकड़ी या कोयले के धुएँ में खाना न बनाना पड़े।'},
+ who:{en:'Adult women from poor households who do not already have an LPG connection in the family.',hi:'ग़रीब परिवार की बालिग़ महिलाएँ, जिनके घर में पहले से गैस कनेक्शन नहीं है।'},
+ get:{en:'A free LPG connection, and help with the cost of refills. The refill amount can change.',hi:'मुफ़्त गैस कनेक्शन, और सिलेंडर भरवाने में मदद। यह रकम बदल सकती है।'},
+ how:{en:'Apply at your nearest gas agency or on pmuy.gov.in. Carry your Aadhaar, ration card and bank passbook.',hi:'अपनी नज़दीकी गैस एजेंसी में या pmuy.gov.in पर आवेदन करें। आधार, राशन कार्ड और बैंक पासबुक साथ रखें।'},
+ ok:p=>p.f&&p.age>=18&&p.yr<=LOW},
+{id:'pmmvy',icon:'🤱',color:'#AD1457',link:'https://www.myscheme.gov.in',
+ name:{en:'PM Matru Vandana Yojana',hi:'प्रधानमंत्री मातृ वंदना योजना'},
+ short:{en:'Cash help of ₹5,000 for pregnant women and new mothers.',hi:'गर्भवती महिलाओं और नई माताओं के लिए ₹5,000 की नक़द मदद।'},
+ what:{en:'Money to help you eat well and rest during pregnancy and after the baby is born.',hi:'गर्भावस्था में और बच्चे के जन्म के बाद अच्छा खाने और आराम करने के लिए पैसे की मदद।'},
+ who:{en:'Pregnant and nursing women aged 19 or above, for the first living child. Women with government jobs, or who already get similar benefits, cannot take it.',hi:'19 साल या उससे ज़्यादा उम्र की गर्भवती और स्तनपान कराने वाली महिलाएँ, पहले जीवित बच्चे के लिए। सरकारी नौकरी वाली या पहले से ऐसा लाभ पा रही महिलाएँ नहीं ले सकतीं।'},
+ get:{en:'₹5,000 in instalments for the first child, straight into your bank account. If the second child is a girl, you get ₹6,000.',hi:'पहले बच्चे के लिए किस्तों में ₹5,000, सीधे आपके बैंक खाते में। दूसरी संतान बेटी हो तो ₹6,000 मिलते हैं।'},
+ how:{en:'Register at your nearest Anganwadi centre or health centre. Carry your Aadhaar, bank passbook and mother-child protection card. See myscheme.gov.in for details.',hi:'अपने पास के आँगनवाड़ी केंद्र या स्वास्थ्य केंद्र में नाम लिखवाएँ। आधार, बैंक पासबुक और मातृ-शिशु सुरक्षा कार्ड साथ रखें। जानकारी के लिए myscheme.gov.in देखें।'},
+ ok:p=>p.f&&p.age>=19&&p.bank}
+];
+
+/* ---------- State ---------- */
+const S={lang:'hi',page:1,age:'',monthly:'',gender:'',bank:null,pf:null,scheme:null};
+try{S.lang=localStorage.getItem('lang')||'hi'}catch(e){}
+const app=document.getElementById('app');
+const t=k=>U[k][S.lang];
+const fmt=n=>Number(n).toLocaleString('en-IN');
+const prof=()=>({age:+S.age,mo:+S.monthly,yr:+S.monthly*12,f:S.gender==='f',bank:S.bank,pf:S.pf});
+const logo=s=>`<div class="logo" style="background:${s.color}22">${s.logo?`<img src="${s.logo}" alt="">`:s.icon}</div>`;
+
+/* ---------- Navigation ---------- */
+function go(n,sid){
+  S.page=n;S.scheme=sid||null;
+  history.pushState({p:n,s:S.scheme},'');
+  render();
+}
+window.addEventListener('popstate',e=>{
+  const st=e.state||{p:1};
+  S.page=st.p;S.scheme=st.s||null;render();
+});
+
+/* ---------- Audio ---------- */
+let speaking=false,speakId=0;
+function stopSpeak(){
+  speakId++;speaking=false;
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+}
+function setListenBtn(){
+  const b=document.getElementById('lis');
+  if(!b)return;
+  b.textContent=speaking?t('stop'):t('listen');
+  b.classList.toggle('on',speaking);
+}
+function toast(msg){
+  const d=document.createElement('div');
+  d.className='toast';d.textContent=msg;document.body.appendChild(d);
+  setTimeout(()=>d.remove(),4500);
+}
+function cleanForSpeech(s){
+  const w=S.lang==='hi'?'रुपये':'rupees';
+  return s.replace(/₹\s?([\d,]+)/g,'$1 '+w).replace(/\s+/g,' ');
+}
+function speak(text){
+  if(!('speechSynthesis' in window)){toast(t('novoice'));return}
+  stopSpeak();
+  const id=speakId;
+  const lang=S.lang==='hi'?'hi-IN':'en-IN';
+  const voices=speechSynthesis.getVoices();
+  const v=voices.find(x=>x.lang.replace('_','-')===lang)||voices.find(x=>x.lang.toLowerCase().startsWith(lang.slice(0,2)));
+  if(!v&&S.lang==='hi'&&voices.length)toast(t('novoice'));
+  const parts=cleanForSpeech(text).split(/(?<=[।.!?])\s+/).filter(Boolean);
+  speaking=true;setListenBtn();
+  parts.forEach((p,i)=>{
+    const u=new SpeechSynthesisUtterance(p);
+    u.lang=lang;if(v)u.voice=v;u.rate=0.9;
+    const done=()=>{if(id===speakId&&i===parts.length-1){speaking=false;setListenBtn()}};
+    u.onend=done;
+    u.onerror=()=>{if(id===speakId){speaking=false;setListenBtn()}};
+    speechSynthesis.speak(u);
+  });
+}
+if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{};
+
+/* ---------- Rendering ---------- */
+function header(){
+  const back=S.page>1?`<button class="back" id="bk">${t('back')}</button>`:`<span class="brand">${t('app')}</span>`;
+  return `<div class="top">${back}<div class="lang" role="group" aria-label="Language">
+    <button data-l="hi" class="${S.lang==='hi'?'on':''}">हिंदी</button>
+    <button data-l="en" class="${S.lang==='en'?'on':''}">English</button></div></div>`;
+}
+function progress(){
+  let d='';for(let i=1;i<=4;i++)d+=`<i class="${i<=S.page?'on':''}"></i>`;
+  return `<div class="prog">${d}</div><p class="stp">${t('step').replace('{a}',S.page)}</p>`;
+}
+function render(){
+  stopSpeak();
+  let b='';
+  const p=S.page;
+  if(p===1){
+    b=progress()+`<h1>${t('q1')}</h1><p class="hint">${t('q1h')}</p>
+    <input class="in" id="age" type="number" inputmode="numeric" min="10" max="99" value="${S.age}" aria-label="${t('q1')}">
+    <button class="btn" id="nx">${t('next')}</button>`;
+  }else if(p===2){
+    b=progress()+`<h1>${t('q2')}</h1><p class="hint">${t('q2h')}</p>
+    <input class="in" id="mo" type="number" inputmode="numeric" min="1" value="${S.monthly}" placeholder="₹" aria-label="${t('q2')}">
+    <div class="big"><small>${t('yr')}</small><span id="yrv"></span></div>
+    <button class="btn" id="nx">${t('next')}</button>`;
+  }else if(p===3){
+    b=progress()+`<h1>${t('q3')}</h1><p class="hint"></p>`+
+    ['m','f','o'].map(k=>`<button class="opt ${S.gender===k?'on':''}" data-g="${k}">${t(k)}</button>`).join('');
+  }else if(p===4){
+    const yn=k=>`<div class="row"><button class="opt ${S[k]===true?'on':''}" data-k="${k}" data-v="y">${t('yes')}</button><button class="opt ${S[k]===false?'on':''}" data-k="${k}" data-v="n">${t('no')}</button></div>`;
+    b=progress()+`<p class="q">${t('q4a')}</p>${yn('bank')}<p class="q">${t('q4b')}</p><p class="hint">${t('q4bh')}</p>${yn('pf')}
+    <button class="btn" id="nx" ${S.bank===null||S.pf===null?'disabled':''}>${t('see')}</button>`;
+  }else if(p===5){
+    const P=prof();
+    const list=SCH.filter(s=>s.ok(P));
+    b=`<h1>${t('res').replace('{n}',list.length)}</h1>
+    <p class="sum">${t('prof').replace('{age}',P.age).replace('{inc}',fmt(P.yr))}</p>`+
+    (list.length?list.map(s=>`<button class="card" data-s="${s.id}">${logo(s)}<div class="ct"><div class="cn">${s.name[S.lang]}</div><div class="cs">${s.short[S.lang]}</div></div><span class="chev">›</span></button>`).join(''):`<p>${t('none')}</p>`)+
+    `<button class="btn alt" id="rs">${t('again')}</button>`;
+  }else{
+    const s=SCH.find(x=>x.id===S.scheme);
+    const sec=k=>`<div class="sec"><h2>${t(k)}</h2><p>${s[k][S.lang]}</p></div>`;
+    b=`<div class="hero">${logo(s)}<h1>${s.name[S.lang]}</h1></div>`+
+    sec('what')+sec('who')+sec('get')+sec('how')+
+    `<a class="btn alt" href="${s.link}" target="_blank" rel="noopener">${t('site')}</a>
+    <p class="note">${t('note')}</p>
+    <button class="listen" id="lis">${t('listen')}</button>`;
+  }
+  app.innerHTML=header()+b;
+  window.scrollTo(0,0);
+  bind();
+}
+
+function bind(){
+  const $=s=>document.querySelector(s);
+  document.querySelectorAll('.lang button').forEach(x=>x.onclick=()=>{
+    S.lang=x.dataset.l;try{localStorage.setItem('lang',S.lang)}catch(e){}
+    render();
+  });
+  const bk=$('#bk');if(bk)bk.onclick=()=>history.back();
+  const nx=$('#nx');
+  if(S.page===1){
+    const i=$('#age');
+    const chk=()=>{S.age=i.value;const a=+i.value;nx.disabled=!(a>=10&&a<=99)};
+    i.oninput=chk;chk();
+    i.onkeydown=e=>{if(e.key==='Enter'&&!nx.disabled)nx.click()};
+    nx.onclick=()=>go(2);
+  }else if(S.page===2){
+    const i=$('#mo'),y=$('#yrv');
+    const chk=()=>{
+      S.monthly=i.value;const m=+i.value;
+      const okv=m>0&&m<=10000000;
+      y.textContent=okv?'₹ '+fmt(m*12):'—';
+      nx.disabled=!okv;
+    };
+    i.oninput=chk;chk();
+    i.onkeydown=e=>{if(e.key==='Enter'&&!nx.disabled)nx.click()};
+    nx.onclick=()=>go(3);
+  }else if(S.page===3){
+    document.querySelectorAll('[data-g]').forEach(x=>x.onclick=()=>{S.gender=x.dataset.g;go(4)});
+  }else if(S.page===4){
+    document.querySelectorAll('[data-k]').forEach(x=>x.onclick=()=>{S[x.dataset.k]=x.dataset.v==='y';render()});
+    nx.onclick=()=>go(5);
+  }else if(S.page===5){
+    document.querySelectorAll('[data-s]').forEach(x=>x.onclick=()=>go(6,x.dataset.s));
+    $('#rs').onclick=()=>{S.age='';S.monthly='';S.gender='';S.bank=null;S.pf=null;go(1)};
+  }else{
+    const s=SCH.find(x=>x.id===S.scheme);
+    $('#lis').onclick=()=>{
+      if(speaking){stopSpeak();setListenBtn();return}
+      const txt=[s.name[S.lang]].concat(['what','who','get','how'].map(k=>t(k)+'. '+s[k][S.lang])).join('. ');
+      speak(txt);
+    };
+  }
+}
+
+history.replaceState({p:1},'');
+render();
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
