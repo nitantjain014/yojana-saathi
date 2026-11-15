@@ -1,0 +1,97 @@
+{
+ "errors": [],
+ "sitemap_urls_found": 78,
+ "scheme_urls_found": 0,
+ "first_urls": [
+  "https://www.myscheme.gov.in",
+  "https://www.myscheme.gov.in/about",
+  "https://www.myscheme.gov.in/accessibility-statement",
+  "https://www.myscheme.gov.in/contact",
+  "https://www.myscheme.gov.in/contingency-management",
+  "https://www.myscheme.gov.in/copyright-policy",
+  "https://www.myscheme.gov.in/dashboard",
+  "https://www.myscheme.gov.in/dashboard-manual",
+  "https://www.myscheme.gov.in/dashboard-old",
+  "https://www.myscheme.gov.in/disclaimer"
+ ],
+ "samples": [
+  {
+   "url": "https://www.myscheme.gov.in/schemes/apy",
+   "title": null,
+   "h1": [
+    ""
+   ],
+   "next_data": {
+    "props": {
+     "pageProps": {}
+    },
+    "page": "/schemes/[slug]",
+    "query": {},
+    "buildId": "PdUMvTNiXk1AOof1hwTyh",
+    "assetPrefix": "https://cdn.myscheme.in",
+    "nextExport": true,
+    "autoExport": true,
+    "isFallback": false,
+    "locale": "en",
+    "locales": [
+     "en",
+     "hi",
+     "or",
+     "as",
+     "bn",
+     "gu",
+     "kn",
+     "ml",
+     "mr",
+     "pa",
+     "ta",
+     "te",
+     "ur",
+     "ks",
+     "mai"
+    ],
+    "defaultLocale": "en",
+    "scriptLoader": []
+   }
+  },
+  {
+   "url": "https://www.myscheme.gov.in/schemes/nsjbsy",
+   "title": null,
+   "h1": [
+    ""
+   ],
+   "next_data": {
+    "props": {
+     "pageProps": {}
+    },
+    "page": "/schemes/[slug]",
+    "query": {},
+    "buildId": "PdUMvTNiXk1AOof1hwTyh",
+    "assetPrefix": "https://cdn.myscheme.in",
+    "nextExport": true,
+    "autoExport": true,
+    "isFallback": false,
+    "locale": "en",
+    "locales": [
+     "en",
+     "hi",
+     "or",
+     "as",
+     "bn",
+     "gu",
+     "kn",
+     "ml",
+     "mr",
+     "pa",
+     "ta",
+     "te",
+     "ur",
+     "ks",
+     "mai"
+    ],
+    "defaultLocale": "en",
+    "scriptLoader": []
+   }
+  }
+ ]
+}
