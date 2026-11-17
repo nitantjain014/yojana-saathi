@@ -1,0 +1,22 @@
+Mode: QUICK TEST  limit=30  langs=['en', 'hi']
+Asked for 100 per page, got 100. Total schemes: 5162. Using size=100.
+No filter: total=5162, collected 100
+Filter gender=Male: total=357
+Filter gender=Female: total=829
+Filter gender=Transgender: total=32
+Filter age=15-19: total=4140
+Filter age=20-24: total=4149
+Filter age=25-29: total=4100
+Filter age=30-34: total=4066
+Filter age=35-39: total=3977
+Filter age=40-44: total=3889
+Filter age=45-49: total=3782
+Filter age=50-54: total=3611
+Filter age=55-59: total=3546
+Filter age=60-64: total=3343
+Filter age=65-69: total=2249
+Filter age=70-74: total=2201
+Filter age=75-100: total=2154
+Filter age=35-35: total=3975
+Fetching details for 30 schemes in ['en', 'hi']
+Finished.
