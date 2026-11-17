@@ -1,0 +1,36 @@
+name: Collect schemes
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "30 = quick test, 0 = collect everything"
+        default: "30"
+      langs:
+        description: "Languages (en = English, hi = Hindi)"
+        default: "en,hi"
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - run: python collect.py
+        env:
+          LIMIT: ${{ github.event.inputs.limit }}
+          LANGS: ${{ github.event.inputs.langs }}
+      - name: Save results to the repo
+        if: always()
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          mkdir -p details
+          git add -A schemes.json details collect_log.txt
+          git commit -m "Update scheme data" || echo "nothing to commit"
+          git pull --rebase || true
+          git push
